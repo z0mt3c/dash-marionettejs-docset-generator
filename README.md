@@ -5,7 +5,7 @@ Just a simple dash docset for Backbone.Marionette. Not the best piece of generat
 Install Docset
 --------------
 
-<a href="http://is.gd/MhyAmv">INSTALL DOCSET</a> (This link only works on Mac with DASH installed :-))
+<a href="http://is.gd/MhyAmv">INSTALL DOCSET</a> (This link only works on Mac with [DASH](https://itunes.apple.com/de/app/dash-docs-snippets/id458034879?mt=12) installed :-))
 
 Subscribes to:
 
