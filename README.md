@@ -17,3 +17,7 @@ Generate Docset
 The following command will execute the git checkout process and generate the docset under: working/marionettejs.docset
 
     node generate.js
+
+
+
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/29922f7ba2ffb169391f460ff2f3bbce "githalytics.com")](http://githalytics.com/z0mt3c/dash-marionettejs-docset-generator)
