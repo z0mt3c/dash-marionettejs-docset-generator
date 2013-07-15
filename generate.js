@@ -1,6 +1,5 @@
 var options = {
-    workDir: 'working',
-    checkoutDir: '',
+    workDir: 'target',
     docSetName: 'marionettejs.docset',
     contentsPath: 'Contents',
     documentPath: 'Contents/Resources/Documents',
@@ -97,7 +96,6 @@ function processDocumentationFile(file) {
 
     content = content.replace(/(<h[123])>(.*)<\/h/g, function () {
         var name = convertToAnchorName(arguments['2']);
-        console.log(name);
         return arguments['1'] + '><a name="' + name + '"></a>' + arguments['2']+"</h";
     });
 
