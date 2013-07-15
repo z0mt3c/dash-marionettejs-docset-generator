@@ -5,7 +5,7 @@ Just a simple dash docset for Backbone.Marionette. Not the best piece of generat
 Install Docset
 --------------
 
-<a href="dash-feed://http%3A%2F%2Fgithub.com%2Fz0mt3c%2Fdash-marionettejs-docset-generator%2Fraw%2Fmaster%2Farchive%2Fmarionettejs.xml">INSTALL DOCSET</a>
+<a href="http://is.gd/MhyAmv">INSTALL DOCSET</a>
 
 Subscribes to:
 
