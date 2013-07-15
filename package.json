@@ -1,6 +1,6 @@
 {
-    "name": "node-restify-demo",
-    "version": "0.0.1",
+    "name": "dash-marionettejs-docset-generator",
+    "version": "0.0.2",
     "author": {
         "name": "Timo Behrmann"
     },
@@ -12,15 +12,15 @@
     ],
     "repository": {
         "type": "git",
-        "url": "git://github.com/z0mt3c/node-restify-demo.git"
+        "url": "git://github.com/z0mt3c/dash-marionettejs-docset-generator.git"
     },
     "bugs": {
-        "url": "https://github.com/z0mt3c/node-restify-demo/issues"
+        "url": "https://github.com/z0mt3c/dash-marionettejs-docset-generator/issues"
     },
     "scripts": {
         "start": "node generate.js"
     },
-    "main": "lib/server",
+    "main": "generate",
     "readmeFilename": "README.md",
     "dependencies": {
         "underscore": "*",
