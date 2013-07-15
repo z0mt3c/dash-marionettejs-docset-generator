@@ -35,6 +35,7 @@ var exec = process.exec(command, function (error, stdout, stderr) {
 });
 
 function copyFiles() {
+    fs.createReadStream('index.html').pipe(fs.createWriteStream(path.join(options.workDir, options.docSetName, options.documentPath, 'index.html')));
     fs.createReadStream('github.css').pipe(fs.createWriteStream(path.join(options.workDir, options.docSetName, options.documentPath, 'css', 'github.css')));
     fs.createReadStream('Info.plist').pipe(fs.createWriteStream(path.join(options.workDir, options.docSetName, options.contentsPath, 'Info.plist')));
     fs.createReadStream('icon.png').pipe(fs.createWriteStream(path.join(options.workDir, options.docSetName, 'icon.png')));
@@ -51,6 +52,21 @@ function processDocumentation() {
     createSearchIndex(items);
 }
 
+function convertToAnchorName(text) {
+
+    var name = text.toLowerCase()
+        .replace(/(<[^>]*>|')/g, '')
+        .replace(/"/g,'')
+        .replace('&#39;','')
+        .replace(/[:*]/g,'')
+        .replace(/&quot;/g,'')
+        .replace(/[_\-\s]+/g, '-')
+        .replace(/['\.]/g, '')
+        .replace('-39-', '')
+        .replace('/','');
+
+    return name;
+}
 function processDocumentationFile(file) {
     var items = [];
 
@@ -74,16 +90,14 @@ function processDocumentationFile(file) {
         regex = /<h2>Marionette\.([^<]*)/g;
 
         while (match = regex.exec(content)) {
-            items.push({name: match[1], type: 'Function', path: fileName + '.html' })
+            var name = convertToAnchorName(match['1']);
+            items.push({name: match[1], type: 'Function', path: fileName + '.html#marionette'+name })
         }
     }
 
-    while (match = regex.exec(content)) {
-        items.push({name: match[1], type: 'Function', path: fileName + '.html' })
-    }
-
     content = content.replace(/(<h[123])>(.*)<\/h/g, function () {
-        var name = arguments['2'].toLowerCase().replace(/(<[^>]*>|')/g, '').replace(/[:_\-\s]+/g, '-').replace(/[']/g, '').replace('.', '').replace('-39-','');
+        var name = convertToAnchorName(arguments['2']);
+        console.log(name);
         return arguments['1'] + '><a name="' + name + '"></a>' + arguments['2']+"</h";
     });
 
