@@ -18,11 +18,7 @@
         "url": "https://github.com/z0mt3c/node-restify-demo/issues"
     },
     "scripts": {
-        "start": "node lib/generate.js",
-        "test": "grunt test",
-        "blanket": {
-            "pattern": "//^(?!.*node_modules.*$).*generate.js\//"
-        }
+        "start": "node generate.js"
     },
     "main": "lib/server",
     "readmeFilename": "README.md",
