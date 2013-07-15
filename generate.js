@@ -99,6 +99,8 @@ function processDocumentationFile(file) {
         return arguments['1'] + '><a name="' + name + '"></a>' + arguments['2']+"</h";
     });
 
+    content = content.replace(/(href="[^"]*).md/g,'$1.html');
+
     fs.writeFileSync(targetFile, "<!DOCTYPE html>\n<html>\n<head>\n<link href=\"css/github.css\" rel=\"stylesheet\" type=\"text/css\">\n<meta charset=\"utf-8\" />\n</head>\n<body>\n" + content + "\n</body>\n</html>");
     return items;
 }
