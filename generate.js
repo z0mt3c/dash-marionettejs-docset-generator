@@ -3,6 +3,8 @@ var options = {
     docSetName: 'marionettejs.docset',
     contentsPath: 'Contents',
     documentPath: 'Contents/Resources/Documents',
+    wreqrRepo: 'https://github.com/marionettejs/backbone.wreqr.git',
+    wreqrTarget: 'wreqr-repo',
     marionetteRepo: 'https://github.com/marionettejs/backbone.marionette.git',
     marionetteTarget: 'marionette-js-repo',
     marionetteDocsFolder: 'docs'
@@ -26,12 +28,21 @@ mkdirp(path.join(options.workDir, options.docSetName, options.documentPath, 'css
 });
 
 // Checkout marionettejs
-var command = 'git clone ' + options.marionetteRepo + ' ' + path.join(options.workDir, options.marionetteTarget);
-var exec = process.exec(command, function (error, stdout, stderr) {
+
+var commandWreqr = 'git clone ' + options.wreqrRepo + ' ' + path.join(options.workDir, options.wreqrTarget);
+var execWreqr = process.exec(commandWreqr, function (error, stdout, stderr) {
     console.log(stdout);
-    processDocumentation()
-    copyFiles();
+    cloneMarionette();
 });
+
+function cloneMarionette() {
+    var command = 'git clone ' + options.marionetteRepo + ' ' + path.join(options.workDir, options.marionetteTarget);
+    var exec = process.exec(command, function (error, stdout, stderr) {
+        console.log(stdout);
+        processDocumentation()
+        copyFiles();
+    });
+}
 
 function copyFiles() {
     fs.createReadStream('index.html').pipe(fs.createWriteStream(path.join(options.workDir, options.docSetName, options.documentPath, 'index.html')));
@@ -47,6 +58,9 @@ function processDocumentation() {
     _.each(files, function (file) {
         items = _.union(items, processDocumentationFile(file));
     });
+
+    processDocumentationFileWreqr();
+    items.push({name: "Wreqr", type: 'Class', path: 'wreqr.html' })
 
     createSearchIndex(items);
 }
@@ -66,6 +80,16 @@ function convertToAnchorName(text) {
 
     return name;
 }
+
+function processDocumentationFileWreqr() {
+    var fileName = 'wreqr';
+    var targetFile = path.join(options.workDir, options.docSetName, options.documentPath, fileName + '.html');
+    var sourceFile = path.join(options.workDir, options.wreqrTarget, "readme.md");;
+    var content = fs.readFileSync(sourceFile, 'utf-8');
+    content = md(content);
+    fs.writeFileSync(targetFile, "<!DOCTYPE html>\n<html>\n<head>\n<link href=\"css/github.css\" rel=\"stylesheet\" type=\"text/css\">\n<meta charset=\"utf-8\" />\n</head>\n<body>\n" + content + "\n</body>\n</html>");
+}
+
 function processDocumentationFile(file) {
     var items = [];
 
