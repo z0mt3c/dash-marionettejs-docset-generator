@@ -154,7 +154,8 @@ function createSearchIndex(items) {
         }
     }, {
         freezeTableName: true,
-        timestamps: false
+        timestamps: false,
+        omitNull: true
     });
 
     SearchIndex.sync().success(function () {
