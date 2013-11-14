@@ -100,27 +100,27 @@ function processDocumentationFile(file) {
 
     content = md(content);
 
-    var regex = /<h1>Marionette\.([^<]*)/g;
+    var regex = /<h1( id="(.*?)")?>Marionette\.([^<]*)/g;
     var match = regex.exec(content);
 
     if (match && match.length >= 1 && match[1]) {
-        items.push({name: match[1], type: 'Class', path: fileName + '.html' })
+        items.push({name: (match.length >= 3) ? match[3] : match[1], type: 'Class', path: fileName + '.html' })
     }
 
-    regex = /<h1>Marionette functions</g;
+    regex = /<h1( id="(.*?)")?>Marionette functions</g;
 
     if (regex.exec(content)) {
-        regex = /<h2>Marionette\.([^<]*)/g;
+        regex = /<h2( id="(.*?)")?>Marionette\.([^<]*)/g;
 
         while (match = regex.exec(content)) {
-            var name = convertToAnchorName(match['1']);
-            items.push({name: match[1], type: 'Function', path: fileName + '.html#marionette'+name })
+            var name = (match.length >= 3) ? match[2] : 'marionette' + convertToAnchorName(match['1']);
+            items.push({name: (match.length >= 3) ? match[3] : match[1], type: 'Function', path: fileName + '.html#'+name })
         }
     }
 
-    content = content.replace(/(<h[123])>(.*)<\/h/g, function () {
-        var name = convertToAnchorName(arguments['2']);
-        return arguments['1'] + '><a name="' + name + '"></a>' + arguments['2']+"</h";
+    content = content.replace(/(<h[123](.*?))>(.*)<\/h/g, function () {
+        var name = convertToAnchorName(arguments['3']);
+        return arguments['1'] + '><a name="' + name + '"></a>' + arguments['3']+"</h";
     });
 
     content = content.replace(/(href="[^"]*).md/g,'$1.html');
